@@ -17,11 +17,19 @@ public class MessageListAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<BaseMessage> mMessageList;
+    private String mUsrNumber = "0000000000";
 
     public MessageListAdapter(Activity context, List<BaseMessage> messageList) {
         mContext = context;
         mMessageList = messageList;
     }
+
+    public void add(BaseMessage message) {
+        this.mMessageList.add(message);
+        notifyDataSetChanged(); // to render the list we need to notify
+    }
+
+    public void setNumber(String num) { mUsrNumber = num; }
 
     @Override
     public int getCount() {
@@ -42,7 +50,7 @@ public class MessageListAdapter extends BaseAdapter {
     public int getItemViewType(int idx) {
         BaseMessage message = (BaseMessage) mMessageList.get(idx);
 
-        if (message.getSender().equals("1234567890")) {
+        if (message.getSender().equals(mUsrNumber)) {
             return VIEW_TYPE_MESSAGE_SENT;
         } else if (message.getUrgency() > 0) {
             return VIEW_TYPE_MESSAGE_HELP;

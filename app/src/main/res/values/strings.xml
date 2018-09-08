@@ -2,7 +2,4 @@
     <string name="app_name">Babble</string>
     <string name="send">SEND</string>
     <string name="enter_message">Enter message...</string>
-
-    <string name="ph_time">11:40</string>
-    <string name="ph_sender">1234567890</string>
 </resources>

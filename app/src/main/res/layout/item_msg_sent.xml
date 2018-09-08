@@ -3,10 +3,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
     android:paddingVertical="10dp"
     android:paddingEnd="15dp"
     android:paddingStart="60dp"
     android:clipToPadding="false">
+
+    <TextView
+        android:id="@+id/message_time"
+        android:text="00:00"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:layout_marginEnd="4dp"
+        android:layout_toStartOf="@+id/message_body"
+        android:layout_alignBottom="@+id/message_body"
+        />
 
     <TextView
         android:id="@+id/message_body"
@@ -15,21 +27,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="240dp"
+        android:layout_marginBottom="8dp"
         android:textColor="#fff"
         android:padding="10dp"
         android:elevation="2dp"
         android:textSize="18dp"
         android:layout_alignParentEnd="true"
-        />
-
-    <TextView
-        android:id="@+id/message_time"
-        android:text="@string/ph_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="10sp"
-        android:layout_marginEnd="4dp"
-        android:layout_toEndOf="@+id/message_body"
         />
 
 </RelativeLayout>

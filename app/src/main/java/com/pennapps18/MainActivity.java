@@ -1,5 +1,6 @@
 package com.pennapps18;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -13,7 +14,12 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 import android.os.Environment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
 
@@ -24,21 +30,34 @@ import java.util.List;
 public class MainActivity extends Activity implements NfcAdapter.CreateBeamUrisCallback {
 
     private static final String TAG = "BeamLargeFilesFragment";
-    /**
-     * Filename that is to be sent for this activity. Relative to /assets.
-     */
-    private static final String FILENAME = "stargazer_droid.jpg";
-    /**
-     * Content provider URI.
-     */
-    private static final String CONTENT_BASE_URI =
-            "content://com.example.android.beamlargefiles.files/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Locate the button in activity_main.xml
+        final Button msgBtn = (Button) findViewById(R.id.btn_msg);
+        final Button helpBtn = (Button) findViewById(R.id.btn_help);
+
+        // Capture button clicks
+        msgBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                // Start MessagingActivity.class
+                Intent myIntent = new Intent(MainActivity.this,
+                        MessagingActivity.class);
+                myIntent.putExtra ( "Phone#", ((EditText)findViewById(R.id.phoneText)).getText().toString() );
+                startActivity(myIntent);
+            }
+        });
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {/*
+                // Start MessagingActivity.class
+                Intent myIntent = new Intent(MainActivity.this,
+                        MessagingActivity.class);
+                startActivity(myIntent);*/
+            }
+        });
 
         NfcAdapter nfc = NfcAdapter.getDefaultAdapter(this);
         if (nfc != null) {
@@ -47,6 +66,23 @@ public class MainActivity extends Activity implements NfcAdapter.CreateBeamUrisC
         } else {
             Log.w(TAG, "NFC is not available");
         }
+
+        ((EditText)findViewById(R.id.phoneText)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if(s.toString().trim().length()==0){
+                    msgBtn.setEnabled(false);
+                } else {
+                    msgBtn.setEnabled(true);
+                }
+            }
+        });
     }
 
     /**
@@ -62,9 +98,9 @@ public class MainActivity extends Activity implements NfcAdapter.CreateBeamUrisC
     @Override
     public Uri[] createBeamUris(NfcEvent nfcEvent) {
 
-        String fileName = "NAME.apk";
+        String fileName = "app-debug.apk";
 
-        // Retrieve the path to the user's public pictures directory
+        // Retrieve the path to the user's public downloads directory
         File fileDirectory = Environment
                 .getExternalStoragePublicDirectory(
                         Environment.DIRECTORY_DOWNLOADS);

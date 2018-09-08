@@ -8,11 +8,12 @@
     android:focusableInTouchMode="true">
 
     <ListView
-        android:layout_width="match_parent"
         android:id="@+id/messages_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="2"
         android:divider="#fff"
-        android:layout_height="wrap_content"
+        android:transcriptMode="alwaysScroll"
         />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

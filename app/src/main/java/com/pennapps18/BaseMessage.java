@@ -11,10 +11,10 @@ public class BaseMessage {
     private int urgency;
     private Location coords;
 
-    public BaseMessage(String msg, String usr, int urg, Location place) {
+    public BaseMessage(String msg, String usr, String time, int urg, Location place) {
         this.body = msg;
         this.sender = usr;
-        this.timeStamp = Calendar.HOUR_OF_DAY + ":" + Calendar.MINUTE;
+        this.timeStamp = time;
         this.urgency = urg;
         this.coords = place;
     }
