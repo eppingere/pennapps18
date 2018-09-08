@@ -1,22 +1,19 @@
 package com.pennapps18;
 
-import android.location.Location;
-
 import java.util.Calendar;
 
 public class BaseMessage {
     private String body;
     private String sender;
+    //User recipient;
     private String timeStamp;
     private int urgency;
-    private Location coords;
 
-    public BaseMessage(String msg, String usr, int urg, Location place) {
+    public BaseMessage(String msg, String usr, int urg) {
         this.body = msg;
         this.sender = usr;
         this.timeStamp = Calendar.HOUR_OF_DAY + ":" + Calendar.MINUTE;
         this.urgency = urg;
-        this.coords = place;
     }
 
     public String getBody() {
@@ -34,6 +31,4 @@ public class BaseMessage {
     public int getUrgency() {
         return this.urgency;
     }
-
-    public Location getCoords() { return this.coords; }
 }
