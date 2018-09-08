@@ -1,10 +1,5 @@
 <resources>
     <string name="app_name">PennApps18</string>
-    <string name="input_placeholder">Write a message</string>
-    <string name="title_help_btn">Get Help</string>
-    <string name="title_msg_btn">Message</string>
-    <string name="title_share_btn">Share</string>
-
-    <string name="ph_time">11:40</string>
-    <string name="ph_number">1234567890</string>
+    <string name="send">SEND</string>
+    <string name="enter_message">Enter message</string>
 </resources>
