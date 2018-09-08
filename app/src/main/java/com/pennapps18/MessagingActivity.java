@@ -10,10 +10,9 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MessagingActivity extends AppCompatActivity {
     private ListView mMessageView;
     private MessageListAdapter mMessageAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
