@@ -1,16 +1,12 @@
 package com.pennapps18;
 
 import android.app.Activity;
-import android.support.v7.widget.RecyclerView;
 import android.content.*;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -88,12 +84,13 @@ public class MessageListAdapter extends BaseAdapter {
             holder.messageBody.setText(message.getBody());
             holder.timeStamp.setText(message.getTimeStamp());
         }
-
         return convertView;
     }
+}
 
-    private class MessageViewHolder {
-        public TextView name;
-        public TextView messageBody;
-        public TextView timeStamp;
-    }
+class MessageViewHolder {
+    public TextView name;
+    public TextView messageBody;
+    public TextView timeStamp;
+}
+
