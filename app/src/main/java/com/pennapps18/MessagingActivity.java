@@ -4,12 +4,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView mMessageRecycler;
+    private ListView mMessageRecycler;
     private MessageListAdapter mMessageAdapter;
 
 
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_messaging);
         List<BaseMessage> msgs = dummyMsg();
 
-        mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
+        mMessageRecycler = (ListView) findViewById(R.id.messages_view);
         mMessageAdapter = new MessageListAdapter(this, msgs);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
