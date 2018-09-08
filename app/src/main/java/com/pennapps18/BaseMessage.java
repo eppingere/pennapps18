@@ -7,7 +7,6 @@ import java.util.Calendar;
 public class BaseMessage {
     private String body;
     private String sender;
-    //User recipient;
     private String timeStamp;
     private int urgency;
     private Location coords;

@@ -39,5 +39,4 @@ public class MessageReceiver extends BroadcastReceiver{
             // Respond to this device's wifi state changing
         }
     }
-
 }
