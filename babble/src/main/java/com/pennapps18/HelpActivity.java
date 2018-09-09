@@ -127,7 +127,7 @@ public class HelpActivity extends Activity implements VerticalStepperForm {
         message += q3.isChecked() ? " We have enough food, water, and supplies to last the next 12 hrs" :
                 " We are missing food, water, and/or supplies for the next 12 hrs";
         if (q4.getText().toString() != null) {
-            message += q4.getText().toString();
+            message += "\nExtra Information:" + q4.getText().toString();
         }
         myIntent.putExtra("Body", message);
         startActivity(myIntent);
