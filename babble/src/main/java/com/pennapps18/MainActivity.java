@@ -43,14 +43,14 @@ public class MainActivity extends Activity implements NfcAdapter.CreateBeamUrisC
                 // We put further UI work in here so
                 // that the user cannot load data before
                 // we authenticate.
-                Log.d(TAG,"Connected to MongoDB");
+                Log.d(TAG, "Connected to MongoDB");
                 initializeUI();
             }
 
             @Override
             public void onfail(Exception e) {
                 // Auth failed. Show the exception to the user
-                Log.d(TAG,e.toString() + "\n\nPlease fix this error and restart the app.");
+                Log.d(TAG, e.toString() + "\n\nPlease fix this error and restart the app.");
                 initializeUI();
             }
         });

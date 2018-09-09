@@ -3,9 +3,13 @@ package com.pennapps18;
 import android.content.Context;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.stitch.android.core.Stitch;
 import com.mongodb.stitch.android.core.StitchAppClient;
@@ -18,6 +22,11 @@ import com.mongodb.stitch.core.auth.providers.google.GoogleCredential;
 import com.mongodb.stitch.core.auth.providers.userapikey.UserApiKeyCredential;
 import com.mongodb.stitch.core.auth.providers.userpassword.UserPasswordCredential;
 
+import org.bson.Document;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class StitchHandler {
 
     private static StitchAppClient stitchClient;
@@ -26,6 +35,7 @@ public class StitchHandler {
     private static String apiKey;
     private static String facebookToken;
     private static String googleAuthKey;
+    private Gson gson = new Gson();
 
     public interface OnAuthCompleted{
         void onSuccess();
@@ -64,6 +74,7 @@ public class StitchHandler {
                     }
                 });
     }
+
 
 //    /**
 //     * Use this method if your Stitch app is configured with

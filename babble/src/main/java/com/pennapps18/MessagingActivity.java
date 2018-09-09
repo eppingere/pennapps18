@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ser.Serializers;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
@@ -33,7 +34,9 @@ import com.google.android.gms.nearby.connection.Strategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
+import com.mongodb.client.FindIterable;
 
+import org.bson.Document;
 import org.w3c.dom.Text;
 
 import java.nio.charset.StandardCharsets;
@@ -170,7 +173,12 @@ public class MessagingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
-        List<BaseMessage> msgs = new ArrayList<>();
+
+        finishSetup();
+    }
+
+    void finishSetup(){
+        List<BaseMessage> msgs = new ArrayList<BaseMessage>();
         gson = new Gson();
         endpoints = new ArrayList<>();
         updatePrompt(0);
@@ -322,8 +330,23 @@ public class MessagingActivity extends AppCompatActivity {
         }
     }
 
-    public void populateList(List<BaseMessage> mMsgs, Iterator<BaseMessage> iter) {
-        
+    private ArrayList<BaseMessage> LoadLocal() {
+        Log.d(TAG, StitchHandler.localClient.toString());
+        FindIterable<Document> cursor =
+                StitchHandler.localClient.getDatabase("messages").getCollection("messages").find().limit(200);
+        ArrayList<BaseMessage> ret = new ArrayList();
+        List<Document> localDocs = cursor.into(new ArrayList<Document>());
+        for (Document doc : localDocs) {
+            String msgJson = (String)doc.get("message_gson");
+            if (msgJson != null && msgJson.length() > 0) {
+                Log.d("LOAD_MN", msgJson + "::" + BaseMessage.class.toString());
+                ret.add(gson.fromJson(msgJson, BaseMessage.class));
+            }
+        }
+        return ret;
+//        ObjectMapper om = new ObjectMapper();
+//        String pretty = om.writerWithDefaultPrettyPrinter().writeValueAsString(localDocs);
+//        LocalDataFragment.localData = pretty;
     }
 
     public String getCurrTime() {
