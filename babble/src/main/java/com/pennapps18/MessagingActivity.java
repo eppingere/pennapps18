@@ -115,8 +115,10 @@ public class MessagingActivity extends AppCompatActivity {
             String msgJSON = new String(bytes);
             BaseMessage msg = gson.fromJson(msgJSON, BaseMessage.class);
             BaseMessage.save(MessagingActivity.this, msgJSON);
-            if (!mMessageAdapter.add(msg)) {
-                //forward message onward here.
+            if (mMessageAdapter.add(msg)) {
+                //forward message onward here if it was a new message for you.
+                Nearby.getConnectionsClient(MessagingActivity.this).sendPayload(endpoints,
+                        Payload.fromBytes(msgJSON.getBytes(StandardCharsets.UTF_8)));
             }
         }
         @Override
@@ -255,7 +257,7 @@ public class MessagingActivity extends AppCompatActivity {
             String msgJSON = gson.toJson(newMsg);
             Nearby.getConnectionsClient(this).sendPayload(endpoints,
                     Payload.fromBytes(msgJSON.getBytes(StandardCharsets.UTF_8)));
-            BaseMessage.save(MessagingActivity.this, msgJSON); //TODO Save on receive
+            BaseMessage.save(MessagingActivity.this, msgJSON);
             mMessageAdapter.add(newMsg);
             typeBox.getText().clear();
         }
