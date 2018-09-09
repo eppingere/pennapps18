@@ -77,7 +77,7 @@ public class MessagingActivity extends AppCompatActivity {
                                         public void onFailure(@NonNull Exception e) {
                                             // Nearby Connections failed to request the connection.
                                             Log.d(TAG, "Failed to request:" + endpointId + "Error:" + e.getMessage());
-                                            SystemClock.sleep(new Random().nextInt(201));
+                                            SystemClock.sleep(new Random().nextInt(201) + 20);
                                             startAdvertising();
                                             startDiscovery();
                                         }
