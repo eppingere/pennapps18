@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
@@ -32,7 +33,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 
-import java.io.UnsupportedEncodingException;
+import org.w3c.dom.Text;
+
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -125,6 +127,7 @@ public class MessagingActivity extends AppCompatActivity {
                             Log.d(TAG, "Successfully connected:" + endpointId);
                             if (!endpoints.contains(endpointId)) {
                                 endpoints.add(endpointId);
+                                updatePrompt();
                             }
                             break;
                         case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
@@ -145,6 +148,7 @@ public class MessagingActivity extends AppCompatActivity {
                     Log.d(TAG, "Connection disconnected" + endpointId);
                     if (endpoints.contains(endpointId)) {
                         endpoints.remove(endpointId);
+                        updatePrompt();
                     }
                 }
             };
@@ -237,16 +241,18 @@ public class MessagingActivity extends AppCompatActivity {
                         new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unusedResult) {
-                                Log.d(TAG, "Successfully started advertising!");
                                 // We're advertising!
+                                Log.d(TAG, "Successfully started advertising!");
                             }
                         })
                 .addOnFailureListener(
                         new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.d(TAG, "Failed to start advertising");
                                 // We were unable to start advertising.
+                                Log.d(TAG, "Failed to start advertising");
+                                SystemClock.sleep(new Random().nextInt(201) + 20);
+                                startAdvertising();
                             }
                         });
     }
@@ -260,18 +266,26 @@ public class MessagingActivity extends AppCompatActivity {
                         new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unusedResult) {
-                                Log.d(TAG, "Successfully started discovery");
                                 // We're discovering!
+                                Log.d(TAG, "Successfully started discovery");
                             }
                         })
                 .addOnFailureListener(
                         new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.d(TAG, "Failed to start discovery");
                                 // We were unable to start discovering.
+                                Log.d(TAG, "Failed to start discovery");
+                                SystemClock.sleep(new Random().nextInt(201) + 20);
+                                startDiscovery();
                             }
                         });
+    }
+
+    public void updatePrompt() {
+        if (endpoints.size() == 0) {
+            (TextView) findViewById(R.id.me);
+        }
     }
 
     public String getCurrTime() {

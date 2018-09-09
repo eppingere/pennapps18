@@ -2,4 +2,5 @@
     <string name="app_name">Babble</string>
     <string name="send">SEND</string>
     <string name="enter_message">Enter message...</string>
+    <string name="messaging_hint">Type message...</string>
 </resources>
