@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -30,8 +31,9 @@ public class HelpActivity extends Activity implements VerticalStepperForm {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-        String[] mySteps = {"Is your life immediately threatened?", "Are you in a safe location with shelter?",
+        String[] subtitles = {"Is your life immediately threatened?", "Are you in a safe location with shelter?",
                 "Are you or someone near you injured?", "Do you have food, water, and supplies for the next 12 hrs?", "What else do we need to know?"};
+        String[] mySteps = {"Threat", "Shelter", "Injury", "Supplies", "Extra Info"};
         int colorPrimary = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary);
         int colorPrimaryDark = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark);
 
@@ -43,10 +45,12 @@ public class HelpActivity extends Activity implements VerticalStepperForm {
                 .primaryColor(colorPrimary)
                 .primaryDarkColor(colorPrimaryDark)
                 .displayBottomNavigation(true) // It is true by default, so in this case this line is not necessary
+                .stepsSubtitles(subtitles)
                 .init();
 
         Intent i = getIntent();
         number = i.getStringExtra("Phone#");
+        Log.d("PHONE_HLP", number);
     }
 
     @Override
@@ -117,7 +121,7 @@ public class HelpActivity extends Activity implements VerticalStepperForm {
 
         Intent myIntent = new Intent(HelpActivity.this,
                 MessagingActivity.class);
-        myIntent.putExtra ("Phone#", number);
+        myIntent.putExtra("Phone#", number);
         myIntent.putExtra("Urg", urgency);
         message += q0.isChecked() ? " My life is in immediate danger." : "";
         message += q1.isChecked() ? " I am in a safe location, and I have shelter." :

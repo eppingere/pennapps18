@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
 import com.google.android.gms.nearby.connection.ConnectionInfo;
@@ -38,6 +39,7 @@ import org.w3c.dom.Text;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -48,6 +50,7 @@ public class MessagingActivity extends AppCompatActivity {
     private String usrNumber;
     private Boolean goodPerms = false;
     private ArrayList<String> endpoints;
+    private String queuedJSON;
 
     private final String SERVICE_ID = "com.penapps18";
     private final String TAG = "MessagingActivity";
@@ -108,6 +111,7 @@ public class MessagingActivity extends AppCompatActivity {
             byte[] bytes = payload.asBytes();
             String msgJSON = new String(bytes);
             BaseMessage msg = gson.fromJson(msgJSON, BaseMessage.class);
+            BaseMessage.save(MessagingActivity.this, msgJSON);
             if (!mMessageAdapter.add(msg)) {
                 //forward message onward here.
             }
@@ -187,15 +191,14 @@ public class MessagingActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         usrNumber = i.getStringExtra("Phone#");
+        mMessageAdapter.setNumber(usrNumber);
+        Log.d("PHONE_MSG", usrNumber);
         int urgency = i.getIntExtra("Urg", -1);
         if (urgency != -1) {
             String message = i.getStringExtra("Body");
             if (message == null) { return; }
             BaseMessage newMsg = new BaseMessage(message, usrNumber, getCurrTime(), urgency, null);
-            String msgJSON = gson.toJson(newMsg);
-            Nearby.getConnectionsClient(this).sendPayload(endpoints,
-                    Payload.fromBytes(msgJSON.getBytes(StandardCharsets.UTF_8)));
-            mMessageAdapter.add(newMsg);
+            queuedJSON = gson.toJson(newMsg);
         }
     }
 
@@ -244,6 +247,7 @@ public class MessagingActivity extends AppCompatActivity {
             String msgJSON = gson.toJson(newMsg);
             Nearby.getConnectionsClient(this).sendPayload(endpoints,
                     Payload.fromBytes(msgJSON.getBytes(StandardCharsets.UTF_8)));
+            BaseMessage.save(MessagingActivity.this, msgJSON); //TODO Save on receive
             mMessageAdapter.add(newMsg);
             typeBox.getText().clear();
         }
@@ -309,7 +313,17 @@ public class MessagingActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.editText)).setHint("Connecting...");
         } else {
             ((TextView) findViewById(R.id.editText)).setHint(code + " recipient(s). Write a message");
+            if (queuedJSON != null) {
+                Nearby.getConnectionsClient(this).sendPayload(endpoints,
+                        Payload.fromBytes(queuedJSON.getBytes(StandardCharsets.UTF_8)));
+                mMessageAdapter.add(gson.fromJson(queuedJSON, BaseMessage.class));
+                queuedJSON = null;
+            }
         }
+    }
+
+    public void populateList(List<BaseMessage> mMsgs, Iterator<BaseMessage> iter) {
+        
     }
 
     public String getCurrTime() {

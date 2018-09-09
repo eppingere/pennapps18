@@ -37,6 +37,26 @@ public class MainActivity extends Activity implements NfcAdapter.CreateBeamUrisC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        new StitchHandler(getApplicationContext()).AuthWithAnonymous(new StitchHandler.OnAuthCompleted() {
+            @Override
+            public void onSuccess() {
+                // We put further UI work in here so
+                // that the user cannot load data before
+                // we authenticate.
+                Log.d(TAG,"Connected to MongoDB");
+                initializeUI();
+            }
+
+            @Override
+            public void onfail(Exception e) {
+                // Auth failed. Show the exception to the user
+                Log.d(TAG,e.toString() + "\n\nPlease fix this error and restart the app.");
+                initializeUI();
+            }
+        });
+    }
+
+    private void initializeUI() {
         // Locate the button in activity_main.xml
         final Button msgBtn = (Button) findViewById(R.id.btn_msg);
         final Button helpBtn = (Button) findViewById(R.id.btn_help);
@@ -57,6 +77,7 @@ public class MainActivity extends Activity implements NfcAdapter.CreateBeamUrisC
                 Intent myIntent = new Intent(MainActivity.this,
                         HelpActivity.class);
                 myIntent.putExtra ( "Phone#", ((EditText)findViewById(R.id.phoneText)).getText().toString() );
+                Log.d("PHONE_MN", ((EditText)findViewById(R.id.phoneText)).getText().toString());
                 startActivity(myIntent);
             }
         });
@@ -77,8 +98,7 @@ public class MainActivity extends Activity implements NfcAdapter.CreateBeamUrisC
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                if(s.toString().trim().length()==0){
+                if(s.toString().trim().length()<10){
                     msgBtn.setEnabled(false);
                 } else {
                     msgBtn.setEnabled(true);
