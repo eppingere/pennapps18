@@ -1,5 +1,6 @@
 package com.pennapps18;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -87,6 +88,7 @@ public class MessagingActivity extends AppCompatActivity {
                 Nearby.getMessagesClient(this).unpublish(currMessage);
             }
             Nearby.getMessagesClient(this).publish(mMessage);
+            BaseMessage.save(MessagingActivity.this, msgJSON); //TODO Save on receive
             mMessageAdapter.add(newMsg);
             typeBox.getText().clear();
         }

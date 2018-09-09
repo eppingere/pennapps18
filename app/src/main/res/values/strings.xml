@@ -2,4 +2,10 @@
     <string name="app_name">Babble</string>
     <string name="send">SEND</string>
     <string name="enter_message">Enter message...</string>
+    <string name="stitch_app_id">pennappsdemo-ppxzn</string>
+    <string name="mdb_collection_id">messages</string>
+    <string name="mdb_database_id">messages</string>
+    <string name="userApiKey">see https://docs.mongodb.com/stitch/authentication/api-key/</string>
+    <string name="facebookToken">see https://docs.mongodb.com/stitch/authentication/facebook/</string>
+    <string name="googleAuthCode">see https://docs.mongodb.com/stitch/authentication/google/</string>
 </resources>

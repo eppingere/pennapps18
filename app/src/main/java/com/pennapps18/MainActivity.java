@@ -36,6 +36,26 @@ public class MainActivity extends Activity implements NfcAdapter.CreateBeamUrisC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        new StitchHandler(getApplicationContext()).AuthWithAnonymous(new StitchHandler.OnAuthCompleted() {
+            @Override
+            public void onSuccess() {
+                // We put further UI work in here so
+                // that the user cannot load data before
+                // we authenticate.
+                Log.d(TAG,"Connected to MongoDB");
+                initializeUI();
+            }
+
+            @Override
+            public void onfail(Exception e) {
+                // Auth failed. Show the exception to the user
+                Log.d(TAG,e.toString() + "\n\nPlease fix this error and restart the app.");
+                initializeUI();
+            }
+        });
+    }
+
+    private void initializeUI() {
         // Locate the button in activity_main.xml
         final Button msgBtn = (Button) findViewById(R.id.btn_msg);
         final Button helpBtn = (Button) findViewById(R.id.btn_help);
