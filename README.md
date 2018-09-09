@@ -2,7 +2,7 @@
 
 PennApps Project Fall 2018
 
-## Babble: World's First and Only 100% Offline Chat Platform
+## Babble: Offline, Self-Propagating Messaging for Low-Connectivity Areas
 
 Babble is the world's first and only chat platform that is able to be installed, setup, and used 100% offline. This platform has a wide variety of use cases such as use in communities with limited internet access like North Korea, Cuba, and Somalia. Additionally, this platform would be able to maintain communications in disaster situations where internet infrastructure is damaged or sabotaged. ex. Warzones, Natural Disasters, etc. 
 
@@ -44,3 +44,7 @@ Take a use case of a Cuba wide roll out. There will be a limited number of users
 Our future goals would be to build better stability and more features such as image and file sharing, emergency messaging, integration with emergency services and the 911 decision tree, end to end encryption, better ledger management, and conversion of ledger to Ethereum-esq anonymized blockchain to allow for 100% secure, private, and untraceable messaging.  
 
 Ultimately, the most insane use of our platform would be as a method for rolling out low bandwidth internet to the offline world. 
+
+
+Name creds go to Chris Choi
+
