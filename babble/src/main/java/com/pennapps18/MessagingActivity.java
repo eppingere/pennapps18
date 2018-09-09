@@ -60,6 +60,7 @@ public class MessagingActivity extends AppCompatActivity {
                         final String endpointId, DiscoveredEndpointInfo discoveredEndpointInfo) {
                     // An endpoint was found!
                     Log.d(TAG, "Found endpoint:" + endpointId);
+                    updatePrompt(-1);
                     Nearby.getConnectionsClient(MessagingActivity.this).requestConnection(
                             usrNumber,
                             endpointId,
@@ -80,8 +81,15 @@ public class MessagingActivity extends AppCompatActivity {
                                             // Nearby Connections failed to request the connection.
                                             Log.d(TAG, "Failed to request:" + endpointId + "Error:" + e.getMessage());
                                             SystemClock.sleep(new Random().nextInt(201) + 20);
-                                            startAdvertising();
-                                            startDiscovery();
+                                            if (!e.getMessage().contains("BLUETOOTH_ERROR")) {
+                                                startAdvertising();
+                                                startDiscovery();
+                                            } else {
+                                                Nearby.getConnectionsClient(MessagingActivity.this).requestConnection(
+                                                        usrNumber,
+                                                        endpointId,
+                                                        mConnectionLifecycleCallback);
+                                            }
                                         }
                                     });
                 }
@@ -127,7 +135,7 @@ public class MessagingActivity extends AppCompatActivity {
                             Log.d(TAG, "Successfully connected:" + endpointId);
                             if (!endpoints.contains(endpointId)) {
                                 endpoints.add(endpointId);
-                                updatePrompt();
+                                updatePrompt(endpoints.size());
                             }
                             break;
                         case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
@@ -148,7 +156,7 @@ public class MessagingActivity extends AppCompatActivity {
                     Log.d(TAG, "Connection disconnected" + endpointId);
                     if (endpoints.contains(endpointId)) {
                         endpoints.remove(endpointId);
-                        updatePrompt();
+                        updatePrompt(endpoints.size());
                     }
                 }
             };
@@ -161,6 +169,7 @@ public class MessagingActivity extends AppCompatActivity {
         List<BaseMessage> msgs = new ArrayList<>();
         gson = new Gson();
         endpoints = new ArrayList<>();
+        updatePrompt(0);
 
         if (ContextCompat.checkSelfPermission(MessagingActivity.this, Manifest.permission.WRITE_CALENDAR)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -250,9 +259,10 @@ public class MessagingActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 // We were unable to start advertising.
-                                Log.d(TAG, "Failed to start advertising");
+                                Log.d(TAG, "Failed to start advertising" + e.getMessage());
                                 SystemClock.sleep(new Random().nextInt(201) + 20);
-                                startAdvertising();
+                                if (!e.getMessage().contains("STATUS_ALREADY_ADVERTISING"))
+                                    startAdvertising();
                             }
                         });
     }
@@ -275,16 +285,21 @@ public class MessagingActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 // We were unable to start discovering.
-                                Log.d(TAG, "Failed to start discovery");
+                                Log.d(TAG, "Failed to start discovery" + e.getMessage());
                                 SystemClock.sleep(new Random().nextInt(201) + 20);
-                                startDiscovery();
+                                if (!e.getMessage().contains("STATUS_ALREADY_DISCOVERING"))
+                                    startDiscovery();
                             }
                         });
     }
 
-    public void updatePrompt() {
-        if (endpoints.size() == 0) {
-            (TextView) findViewById(R.id.me);
+    public void updatePrompt(int code) {
+        if (code == 0) {
+            ((TextView) findViewById(R.id.editText)).setHint("No connections yet!");
+        } else if (code == -1) {
+            ((TextView) findViewById(R.id.editText)).setHint("Connecting...");
+        } else {
+            ((TextView) findViewById(R.id.editText)).setHint(code + " recipient(s). Write a message");
         }
     }
 
