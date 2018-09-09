@@ -169,14 +169,18 @@ public class HelpActivity extends Activity implements VerticalStepperForm {
     }
 
     private void checkThreat() {
+        verticalStepperForm.setActiveStepAsCompleted();
     }
 
     private void checkLoc() {
+        verticalStepperForm.setActiveStepAsCompleted();
     }
 
     private void checkInjury() {
+        verticalStepperForm.setActiveStepAsCompleted();
     }
 
     private void checkSupply() {
+        verticalStepperForm.setActiveStepAsCompleted();
     }
 }

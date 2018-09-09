@@ -55,7 +55,7 @@ public class MainActivity extends Activity implements NfcAdapter.CreateBeamUrisC
             public void onClick(View arg0) {
                 // Start MessagingActivity.class
                 Intent myIntent = new Intent(MainActivity.this,
-                        MessagingActivity.class);
+                        HelpActivity.class);
                 myIntent.putExtra ( "Phone#", ((EditText)findViewById(R.id.phoneText)).getText().toString() );
                 startActivity(myIntent);
             }
