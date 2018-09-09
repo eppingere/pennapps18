@@ -1,6 +1,7 @@
 package com.pennapps18;
 
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -51,11 +52,12 @@ public class MainActivity extends Activity implements NfcAdapter.CreateBeamUrisC
             }
         });
         helpBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {/*
+            public void onClick(View arg0) {
                 // Start MessagingActivity.class
                 Intent myIntent = new Intent(MainActivity.this,
                         MessagingActivity.class);
-                startActivity(myIntent);*/
+                myIntent.putExtra ( "Phone#", ((EditText)findViewById(R.id.phoneText)).getText().toString() );
+                startActivity(myIntent);
             }
         });
 

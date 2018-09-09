@@ -187,7 +187,16 @@ public class MessagingActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         usrNumber = i.getStringExtra("Phone#");
-        mMessageAdapter.setNumber(usrNumber);
+        int urgency = i.getIntExtra("Urg", -1);
+        if (urgency != -1) {
+            String message = i.getStringExtra("Body");
+            if (message == null) { return; }
+            BaseMessage newMsg = new BaseMessage(message, usrNumber, getCurrTime(), urgency, null);
+            String msgJSON = gson.toJson(newMsg);
+            Nearby.getConnectionsClient(this).sendPayload(endpoints,
+                    Payload.fromBytes(msgJSON.getBytes(StandardCharsets.UTF_8)));
+            mMessageAdapter.add(newMsg);
+        }
     }
 
     @Override

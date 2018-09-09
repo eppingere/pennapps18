@@ -2,11 +2,11 @@
 
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,6 +20,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="92dp"
             android:text="Babble"
+            android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="36sp" />
@@ -31,7 +32,9 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="225dp"
-            android:text="Help" />
+            android:background="@color/colorRed"
+            android:text="Help"
+            android:textColor="#fff" />
 
         <Button
             android:id="@+id/btn_msg"
@@ -40,7 +43,9 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="148dp"
-            android:text="Message" />
+            android:background="@color/colorBlue"
+            android:text="Message"
+            android:textColor="#fff" />
 
         <TextView
             android:id="@+id/helpText"
