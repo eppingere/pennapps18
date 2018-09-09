@@ -76,7 +76,7 @@
             android:layout_below="@+id/helpText"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginTop="85dp"
+            android:layout_marginTop="85sp"
             android:ems="10"
             android:hint="Type here..."
             android:inputType="phone" />
@@ -88,7 +88,7 @@
             android:layout_above="@+id/btn_msg"
             android:layout_below="@+id/phoneText"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="85dp"
+            android:layout_marginBottom="85sp"
             android:textAlignment="center"
             android:text="Phone Number" />
 

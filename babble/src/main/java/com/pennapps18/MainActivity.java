@@ -98,7 +98,7 @@ public class MainActivity extends Activity implements NfcAdapter.CreateBeamUrisC
     @Override
     public Uri[] createBeamUris(NfcEvent nfcEvent) {
 
-        String fileName = "babble.apk";
+        String fileName = "babble.apk.zip";
 
         // Retrieve the path to the user's public downloads directory
         File fileDirectory = Environment

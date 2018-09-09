@@ -24,9 +24,13 @@ public class MessageListAdapter extends BaseAdapter {
         mMessageList = messageList;
     }
 
-    public void add(BaseMessage message) {
+    public Boolean add(BaseMessage message) {
+        if (this.mMessageList.contains(message)) {
+            return false;
+        }
         this.mMessageList.add(message);
         notifyDataSetChanged(); // to render the list we need to notify
+        return true;
     }
 
     public void setNumber(String num) { mUsrNumber = num; }
