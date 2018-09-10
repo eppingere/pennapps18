@@ -1,10 +1,16 @@
 # Babble: PennAppsXVIII
 
-PennApps Project Fall 2018
+[PennApps Project Fall 2018](https://devpost.com/software/pennapps18-2pjcx0)
+
+[![](http://img.youtube.com/vi/_DBQITRE7F4/0.jpg)](http://www.youtube.com/watch?v=_DBQITRE7F4 "")
 
 ## Babble: Offline, Self-Propagating Messaging for Low-Connectivity Areas
 
 Babble is the world's first and only chat platform that is able to be installed, setup, and used 100% offline. This platform has a wide variety of use cases such as use in communities with limited internet access like North Korea, Cuba, and Somalia. Additionally, this platform would be able to maintain communications in disaster situations where internet infrastructure is damaged or sabotaged. ex. Warzones, Natural Disasters, etc. 
+
+### Demo Video
+
+[![](http://img.youtube.com/vi/M5dz9_pf2pU/0.jpg)](http://www.youtube.com/watch?v=M5dz9_pf2pU "")
 
 ## Offline Install & Setup
 
