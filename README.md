@@ -29,7 +29,7 @@ The combination of the Android Nearby Connections API with this decentralized, d
 Whenever an instance of Babble gains internet access, it uploads a copy of its ledger to a MongoDB Atlas Cluster running on Google Cloud. There the local ledger is amalgamated with the global ledger which contains all messages sent world wide. From there the local copy of the ledger is updated from the global copy to contain messages for nearby users. 
 
 
-## Use Cases
+## [Use Cases](#use-cases)
 
 ### Internet Infrastructure Failure: Natural Disaster
 
